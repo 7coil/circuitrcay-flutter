@@ -1,8 +1,8 @@
-import 'package:circuitapp/class/User.dart';
-import 'package:circuitapp/pages/LoginPage.dart';
-import 'package:circuitapp/tabs/Balance.dart';
-import 'package:circuitapp/tabs/second.dart';
-import 'package:circuitapp/tabs/third.dart';
+import 'package:circuitrcay/class/User.dart';
+import 'package:circuitrcay/pages/LoginPage.dart';
+import 'package:circuitrcay/tabs/Balance.dart';
+import 'package:circuitrcay/tabs/second.dart';
+import 'package:circuitrcay/tabs/third.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,7 +43,6 @@ class HomePageState extends State<HomePage>
   }
 
   void handleMenu(String option) {
-    print(option);
     if (option == 'logout') {
       areYouSureJen();
     } else if (option == 'org') {
@@ -130,7 +129,7 @@ class HomePageState extends State<HomePage>
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem<String>(
                   value: 'org',
-                  child: Text('Organisation'),
+                  child: Text('My Organisation'),
                 ),
                 PopupMenuItem<String>(
                   value: 'logout',

@@ -1,4 +1,4 @@
-import 'package:circuitapp/pages/LandingPage.dart';
+import 'package:circuitrcay/pages/LandingPage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());

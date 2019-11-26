@@ -1,4 +1,4 @@
-name: circuitapp
+name: circuitrcay
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -26,6 +26,8 @@ dependencies:
   crypted_preferences: ^0.0.2
   basic_utils: ^2.3.4
   http: ^0.12.0+2
+  barcode_scan: ^1.0.0
+  localstorage: ^3.0.0
 
 dev_dependencies:
   flutter_test:

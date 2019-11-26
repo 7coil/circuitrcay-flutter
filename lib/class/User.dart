@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:circuitrcay/class/Machines.dart';
 import 'package:crypted_preferences/crypted_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
 
 class User {
   int appUserId;
@@ -13,6 +15,7 @@ class User {
   int accountCurrencyTypeID;
   String accountCurrencyUniCode;
   bool ok;
+  List<Machine> machines = new List<Machine>();
 
   User.fromJSON(Map<String, dynamic> keyValue) {
     ok = keyValue['Success'] == true;
@@ -37,23 +40,28 @@ class User {
 
     var json = jsonDecode(response.body);
 
-    print(json);
-
     if (json['Success'] == true) {
       this.accountBalance = json['Data']['AccountBalance'];
     }
   }
 
+  Future<void> updateMachines() async {
+    machines = await Machine.listMachines(token);
+    print(machines);
+  }
+
   Future<void> logout() async {
-    var prefs = await Preferences.preferences(path: 'haseul');
-    prefs.setString("userData", null);
+    LocalStorage storage = new LocalStorage('data');
+    await storage.ready;
+    storage.setItem("userData", null);
 
     return;
   }
 
   static Future<User> getFromStorage() async {
-    var prefs = await Preferences.preferences(path: 'haseul');
-    String userDataJSON = prefs.getString("userData");
+    LocalStorage storage = new LocalStorage('data');
+    await storage.ready;
+    var userDataJSON = storage.getItem('userData');
 
     // Return null if the user in storage doesn't exist.
     if (userDataJSON == null) {

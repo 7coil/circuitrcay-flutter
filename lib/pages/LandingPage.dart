@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:circuitapp/class/User.dart';
-import 'package:circuitapp/pages/HomePage.dart';
-import 'package:circuitapp/pages/LoginPage.dart';
+import 'package:circuitrcay/class/User.dart';
+import 'package:circuitrcay/pages/HomePage.dart';
+import 'package:circuitrcay/pages/LoginPage.dart';
 import 'package:crypted_preferences/crypted_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
