@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailFilter = TextEditingController();
   final TextEditingController _passwordFilter = TextEditingController();
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -70,7 +70,7 @@ class LoginPageState extends State<LoginPage> {
     User userData = User.fromJSON(json);
 
     if (userData.ok) {
-      LocalStorage storage = new LocalStorage('data');
+      LocalStorage storage = LocalStorage('data');
       await storage.ready;
       storage.setItem("userData", response.body);
 

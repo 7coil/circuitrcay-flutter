@@ -44,9 +44,9 @@ class LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-      title: new Text("Loading..."),
+    return Scaffold(
+        appBar: AppBar(
+      title: Text("Loading..."),
     ));
   }
 }

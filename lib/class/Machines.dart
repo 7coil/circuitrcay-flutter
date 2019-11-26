@@ -48,10 +48,10 @@ class Machine {
 
     if (json['Success'] == true) {
       return (json['Data'] as List)
-        .map((e) => new Machine.fromJSON(e))
+        .map((e) => Machine.fromJSON(e))
           .toList();
     } else {
-      return new List<Machine>();
+      return List<Machine>();
     }
   }
 }

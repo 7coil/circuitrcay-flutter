@@ -55,11 +55,11 @@ class HomePageState extends State<HomePage>
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text(widget.userData.accountWelcomeTitle),
-            content: new Text(widget.userData.accountWelcomeText),
+            title: Text(widget.userData.accountWelcomeTitle),
+            content: Text(widget.userData.accountWelcomeText),
             actions: <Widget>[
-              new FlatButton(
-                child: new Text('Close'),
+              FlatButton(
+                child: Text('Close'),
                 onPressed: () {
                   // Close dialog
                   Navigator.of(context).pop();
@@ -75,18 +75,18 @@ class HomePageState extends State<HomePage>
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text('Log off?'),
-            content: new Text('Circuit will be sad.'),
+            title: Text('Log off?'),
+            content: Text('Circuit will be sad.'),
             actions: <Widget>[
-              new FlatButton(
-                child: new Text('Cancel'),
+              FlatButton(
+                child: Text('Cancel'),
                 onPressed: () {
                   // Close dialog
                   Navigator.of(context).pop();
                 },
               ),
-              new FlatButton(
-                child: new Text('Log Off'),
+              FlatButton(
+                child: Text('Log Off'),
                 onPressed: () {
                   // Close dialog
                   Navigator.of(context).pop();

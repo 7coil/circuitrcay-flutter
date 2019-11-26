@@ -15,7 +15,7 @@ class User {
   int accountCurrencyTypeID;
   String accountCurrencyUniCode;
   bool ok;
-  List<Machine> machines = new List<Machine>();
+  List<Machine> machines = List<Machine>();
 
   User.fromJSON(Map<String, dynamic> keyValue) {
     ok = keyValue['Success'] == true;
@@ -51,7 +51,7 @@ class User {
   }
 
   Future<void> logout() async {
-    LocalStorage storage = new LocalStorage('data');
+    LocalStorage storage = LocalStorage('data');
     await storage.ready;
     storage.setItem("userData", null);
 
@@ -59,7 +59,7 @@ class User {
   }
 
   static Future<User> getFromStorage() async {
-    LocalStorage storage = new LocalStorage('data');
+    LocalStorage storage = LocalStorage('data');
     await storage.ready;
     var userDataJSON = storage.getItem('userData');
 

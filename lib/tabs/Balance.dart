@@ -82,9 +82,9 @@ class BalanceState extends State<Balance> {
                 ),
                 Row(
                   children: <Widget>[
-                    new RaisedButton(
+                    RaisedButton(
                       onPressed: scan,
-                      child: new Text("Scan"),
+                      child: Text("Scan"),
                     )
                   ],
                 )
