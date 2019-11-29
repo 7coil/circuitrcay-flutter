@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:circuitrcay/class/Machines.dart';
-import 'package:crypted_preferences/crypted_preferences.dart';
+import 'package:circuitrcay/class/Machine.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
@@ -33,6 +32,29 @@ class User {
     }
   }
 
+  static Future<User> fromCredentials(String username, String password) async {
+    if (password.length > 64) {
+      password = password.substring(0, 64);
+    }
+
+    final response = await http.post(
+        'https://laundrymachines.netlify.com/.netlify/functions/fetch/api/user/authenticate?email=$username&password=$password');
+
+    var json = jsonDecode(response.body);
+
+    User user = User.fromJSON(json);
+
+    if (user.ok) {
+      LocalStorage storage = LocalStorage('data');
+      await storage.ready;
+      storage.setItem("userData", response.body);
+
+      return user;
+    } else {
+      throw(json['Message']);
+    }
+  }
+
   Future<void> updateBalance() async {
     final response = await http.post(
         'https://laundrymachines.netlify.com/.netlify/functions/fetch/api/user/ReconcileCards',
@@ -48,6 +70,11 @@ class User {
   Future<void> updateMachines() async {
     machines = await Machine.listMachines(token);
     print(machines);
+  }
+
+  Future<void> activateMachine(String id) async {
+    await Machine.activateMachine(token, id);
+    await this.updateMachines();
   }
 
   Future<void> logout() async {

@@ -1,8 +1,7 @@
 import 'package:circuitrcay/class/User.dart';
 import 'package:circuitrcay/pages/LoginPage.dart';
-import 'package:circuitrcay/tabs/Balance.dart';
-import 'package:circuitrcay/tabs/second.dart';
-import 'package:circuitrcay/tabs/third.dart';
+import 'package:circuitrcay/tabs/MachinesTab.dart';
+import 'package:circuitrcay/tabs/MainTab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,7 +31,7 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    this.controller = TabController(length: 3, vsync: this);
+    this.controller = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -47,6 +46,8 @@ class HomePageState extends State<HomePage>
       areYouSureJen();
     } else if (option == 'org') {
       showOrganisationMessage();
+    } else if (option == 'notify') {
+      notify();
     }
   }
 
@@ -108,6 +109,10 @@ class HomePageState extends State<HomePage>
         MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
   }
 
+  void notify() {
+    
+  }
+
   TabBarView getTabBarView(var tabs) {
     return TabBarView(
       children: tabs,
@@ -118,36 +123,40 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-          actions: <Widget>[
-            PopupMenuButton<String>(
-              onSelected: handleMenu,
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'org',
-                  child: Text('My Organisation'),
-                ),
-                PopupMenuItem<String>(
-                  value: 'logout',
-                  child: Text('Log Out of ' + widget.userData.accountName),
-                ),
-              ],
-            )
-          ],
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(icon: Icon(Icons.home)),
-              Tab(icon: Icon(Icons.add)),
-              Tab(icon: Icon(Icons.local_laundry_service)),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleMenu,
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'org',
+                child: Text('My Organisation'),
+              ),
+              PopupMenuItem<String>(
+                value: 'logout',
+                child: Text('Log Out of ' + widget.userData.accountName),
+              ),
             ],
-            controller: controller,
-          ),
+          )
+        ],
+        bottom: TabBar(
+          tabs: <Widget>[
+            Tab(icon: Icon(Icons.home)),
+            Tab(icon: Icon(Icons.local_laundry_service))
+          ],
+          controller: controller,
         ),
-        body: getTabBarView(
-            <Widget>[Balance(userData: widget.userData), Second(), Third()]));
+      ),
+      body: getTabBarView(
+        <Widget>[
+          MainTab(userData: widget.userData),
+          MachinesTab(userData: widget.userData),
+        ],
+      ),
+    );
   }
 }

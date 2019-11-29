@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:circuitrcay/class/User.dart';
 import 'package:circuitrcay/pages/HomePage.dart';
-import 'package:crypted_preferences/crypted_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:localstorage/localstorage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -56,30 +51,15 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Future<void> loginPressed(BuildContext context) async {
-    String password = _password;
-
-    if (password.length > 64) {
-      password = _password.substring(0, 64);
-    }
-
-    final response = await http.post(
-        'https://laundrymachines.netlify.com/.netlify/functions/fetch/api/user/authenticate?email=$_email&password=$password');
-
-    var json = jsonDecode(response.body);
-
-    User userData = User.fromJSON(json);
-
-    if (userData.ok) {
-      LocalStorage storage = LocalStorage('data');
-      await storage.ready;
-      storage.setItem("userData", response.body);
+    try {
+      User user = await User.fromCredentials(_email, _password);
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
-              HomePage(title: 'CircuitRCAY', userData: userData)));
-    } else {
+              HomePage(title: 'CircuitRCAY', userData: user)));
+    } catch (error) {
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(json['Message']),
+        content: Text(error.toString()),
       ));
     }
   }
