@@ -7,6 +7,7 @@ A Flutter project designed to replace CircuitRCAY.
 - [x] View your organisation's message
 - [x] QR code scanner
 - [x] List of machines
+- [x] Top Up
 - [ ] Notifications
 
 For something that "barely" works, try [CircuitRCAY](https://github.com/7coil/circuitrcay).

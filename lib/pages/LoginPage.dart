@@ -11,7 +11,6 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailFilter = TextEditingController();
   final TextEditingController _passwordFilter = TextEditingController();
-  var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -56,7 +55,7 @@ class LoginPageState extends State<LoginPage> {
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
-              HomePage(title: 'CircuitRCAY', userData: user)));
+              HomePage(userData: user)));
     } catch (error) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(error.toString()),
@@ -112,7 +111,7 @@ class LoginPageState extends State<LoginPage> {
                   child: Text("Login"),
                   onPressed: () => loginPressed(context),
                   focusNode: loginFocusNode,
-                )
+                ),
               ],
             )
           );

@@ -5,7 +5,7 @@ import 'package:circuitrcay/tabs/MainTab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title, this.userData}) : super(key: key);
+  HomePage({Key key, this.userData}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
   final User userData;
 
   @override
@@ -125,7 +124,7 @@ class HomePageState extends State<HomePage>
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("CircuitRCAY"),
         actions: <Widget>[
           PopupMenuButton<String>(
             onSelected: handleMenu,

@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:circuitrcay/class/Machine.dart';
 import 'package:http/http.dart' as http;
-import 'package:localstorage/localstorage.dart';
+import 'package:path_provider/path_provider.dart';
 
 class User {
   int appUserId;
@@ -48,9 +49,8 @@ class User {
     User user = User.fromJSON(json);
 
     if (user.ok) {
-      LocalStorage storage = LocalStorage('data');
-      await storage.ready;
-      storage.setItem("userData", response.body);
+      final file = await _localFile;
+      await file.writeAsString(response.body);
 
       return user;
     } else {
@@ -96,21 +96,33 @@ class User {
     await this.updateMachines();
   }
 
+  static Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  static Future<File> get _localFile async {
+    final path = await _localPath;
+    File file = File('$path/data.json');
+
+    if (!file.existsSync()) await file.writeAsString("");
+
+    return file;
+  }
+
   Future<void> logout() async {
-    LocalStorage storage = LocalStorage('data');
-    await storage.ready;
-    storage.setItem("userData", null);
+    final file = await _localFile;
+    await file.writeAsString("");
 
     return;
   }
 
   static Future<User> getFromStorage() async {
-    LocalStorage storage = LocalStorage('data');
-    await storage.ready;
-    var userDataJSON = storage.getItem('userData');
+    final file = await _localFile;
+    String userDataJSON = await file.readAsString();
 
     // Return null if the user in storage doesn't exist.
-    if (userDataJSON == null) {
+    if (userDataJSON == "") {
       return null;
     }
 
