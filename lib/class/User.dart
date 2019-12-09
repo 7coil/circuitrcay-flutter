@@ -37,6 +37,9 @@ class User {
       password = password.substring(0, 64);
     }
 
+    username = Uri.encodeQueryComponent(username);
+    password = Uri.encodeQueryComponent(password);
+
     final response = await http.post(
         'https://laundrymachines.netlify.com/.netlify/functions/fetch/api/user/authenticate?email=$username&password=$password');
 
@@ -64,6 +67,22 @@ class User {
 
     if (json['Success'] == true) {
       this.accountBalance = json['Data']['AccountBalance'];
+    }
+  }
+
+  Future<String> getPaymentURL(int amount, String promotionalCode, bool acceptCreditAndDebit) async {
+    promotionalCode = Uri.encodeQueryComponent(promotionalCode);
+
+    final response = await http.post(
+        'https://laundrymachines.netlify.com/.netlify/functions/fetch/api/user/RequestPurchase?Amount=$amount&PromotionCode=$promotionalCode&billingDirect=$acceptCreditAndDebit',
+        headers: {'authorization': 'bearer $token'});
+
+    var json = jsonDecode(response.body);
+
+    if (json['Success'] == true) {
+      return json['Data']['PaymentURL'];
+    } else {
+      throw json['Message'];
     }
   }
 

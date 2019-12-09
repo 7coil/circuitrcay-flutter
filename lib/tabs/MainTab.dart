@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:circuitrcay/class/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainTab extends StatefulWidget {
   MainTab({Key key, this.userData}) : super(key: key);
@@ -96,6 +97,25 @@ class MainTabState extends State<MainTab> {
     }
   }
 
+  Function topUp(int amount) {
+    return () async {
+      try {
+        String url = await widget.userData.getPaymentURL(amount, "", true);
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text("Failed to launch $url"),
+          ));
+        }
+      } catch(e) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(e.toString()),
+        ));
+      }
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -107,11 +127,55 @@ class MainTabState extends State<MainTab> {
               // center the children
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Your balance is:"),
+                Row(children: <Widget>[
+                  Expanded(child: Divider()),
+                  Text("Balance"),
+                  Expanded(child: Divider()),
+                ]),
                 Text(
                   "£$_balanceString",
                   style: TextStyle(fontSize: 60),
                 ),
+                SizedBox(height: 30),
+                Row(children: <Widget>[
+                  Expanded(child: Divider()),
+                  Text("Top Up"),
+                  Expanded(child: Divider()),
+                ]),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: topUp(5),
+                        child: Text("£5"),
+                      ),
+                    ),
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: topUp(10),
+                        child: Text("£10"),
+                      ),
+                    ),
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: topUp(20),
+                        child: Text("£20"),
+                      ),
+                    ),
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: topUp(50),
+                        child: Text("£50"),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Row(children: <Widget>[
+                  Expanded(child: Divider()),
+                  Text("Activate Machines"),
+                  Expanded(child: Divider()),
+                ]),
                 Row(
                   children: <Widget>[
                     Expanded(

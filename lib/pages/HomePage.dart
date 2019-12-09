@@ -109,9 +109,7 @@ class HomePageState extends State<HomePage>
         MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
   }
 
-  void notify() {
-    
-  }
+  void notify() {}
 
   TabBarView getTabBarView(var tabs) {
     return TabBarView(
