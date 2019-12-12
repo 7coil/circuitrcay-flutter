@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:circuitrcay/class/Machine.dart';
 import 'package:circuitrcay/class/User.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +23,44 @@ class MachinesTab extends StatefulWidget {
 
 class MachinesTabState extends State<MachinesTab> {
   List<Machine> _machines = [];
+  Map<Machine, String> _remaining = Map<Machine, String>();
+  Timer _everySecond;
 
   void initState() {
     super.initState();
     this._machines = widget.userData.machines;
+    redoCountdown();
+    this._everySecond = Timer.periodic(Duration(milliseconds: 20), (Timer t) {
+      redoCountdown();
+    });
+  }
+
+  @override
+  void dispose() {
+    this._everySecond?.cancel();
+    super.dispose();
+  }
+
+  void redoCountdown() {
+    setState(() {
+      DateTime now = DateTime.now();
+      Map<Machine, String> map = Map<Machine, String>();
+      this._machines
+        .forEach((Machine machine) {
+          if (machine.estimatedCompletionTime == null) {
+            map[machine] = "Completed!";
+          } else {
+            Duration difference = machine.estimatedCompletionTime.difference(now);
+
+            if (difference.isNegative) {
+              map[machine] = "Completed!";
+            } else {
+              map[machine] = machine.estimatedCompletionTime.difference(now).toString();
+            }
+          }
+        });
+      _remaining = map;
+    });
   }
 
   Future<void> onRefresh() async {
@@ -45,12 +81,11 @@ class MachinesTabState extends State<MachinesTab> {
 
     this._machines
       .forEach((Machine machine) {
-        print(machine.name);
         String name = machine.name;
-        String date = machine.estimatedCompletionTime.toString();
+        String remaining = _remaining[machine];
         widgets.add(
           Container(
-            child: Text("$name, $date"),
+            child: Text("$name, $remaining"),
           )
         );
       });
