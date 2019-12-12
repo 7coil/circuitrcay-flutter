@@ -26,14 +26,19 @@ class Machine {
     // Dart can only take 6 digit fraction of a second.
     // Substring 2 removes (Z) and (4).
     // 2019-11-19T15:18:00.0685314Z
-    estimatedCompletionTimeString = estimatedCompletionTimeString.substring(0, estimatedCompletionTimeString.length - 2);
+    if (estimatedCompletionTimeString.length > 0) {
+      estimatedCompletionTimeString = estimatedCompletionTimeString.substring(0, estimatedCompletionTimeString.length - 2);
+      estimatedCompletionTime = DateTime.parse(estimatedCompletionTimeString);
+    } else {
+      estimatedCompletionTime = null;
+    }
 
     machineID = keyValue['MachineId'];
     machineInUseID = keyValue['MachineInUseID'];
     available = keyValue['Available'];
     statusDescription = keyValue['StatusDescription'];
     category = keyValue['Category'];
-    estimatedCompletionTime = DateTime.parse(estimatedCompletionTimeString);
+    
     highSuggestedCreditAmount = keyValue['HighSuggestedCreditAmount'];
     lowSuggestedCreditAmount = keyValue['LowSuggestedCreditAmount'];
     make = keyValue['Make'];
