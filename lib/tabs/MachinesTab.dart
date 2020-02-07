@@ -29,9 +29,9 @@ class MachinesTabState extends State<MachinesTab> {
   void initState() {
     super.initState();
     this._machines = widget.userData.machines;
-    redoCountdown();
+    updateDisplay();
     this._everySecond = Timer.periodic(Duration(milliseconds: 20), (Timer t) {
-      redoCountdown();
+      updateDisplay();
     });
   }
 
@@ -41,7 +41,7 @@ class MachinesTabState extends State<MachinesTab> {
     super.dispose();
   }
 
-  void redoCountdown() {
+  void updateDisplay() {
     setState(() {
       DateTime now = DateTime.now();
       Map<Machine, String> map = Map<Machine, String>();
