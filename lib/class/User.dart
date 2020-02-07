@@ -22,7 +22,7 @@ class User {
     if (ok) {
       var data = keyValue['Data'];
 
-      accountBalance = data['AccountBalance'];
+      accountBalance = double.parse(data['AccountBalance'].toString());
       accountCurrencyTypeID = data['AccountCurrencyTypeID'];
       accountCurrencyUniCode = data['AccountCurrencyUniCode'];
       appUserId = data['AppUserId'];
@@ -66,7 +66,7 @@ class User {
     var json = jsonDecode(response.body);
 
     if (json['Success'] == true) {
-      this.accountBalance = json['Data']['AccountBalance'];
+      this.accountBalance = double.parse(json['Data']['AccountBalance'].toString());
     }
   }
 
