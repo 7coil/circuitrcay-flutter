@@ -63,7 +63,7 @@ class Machine {
         .map((e) => Machine.fromJSON(e))
         .toList();
 
-      list.add(Machine.fromJSON(jsonDecode('{ "MachineId": "ABCDEFGH", "MachineInUseID": 0, "Available": true, "StatusDescription": "Available", "Category": "Washing Machines", "EstimatedCompletionTime": "2019-11-19T15:18:00.0685314Z", "HighSuggestedCreditAmount": 800, "LowSuggestedCreditAmount": 10, "Make": "Townsend Corporation", "Model": "Townsend 4000", "Name": "Test Washer", "Status": 1, "StatusText": "Available", "AccountExternalKey": "ABCDEFGH", "LocationId": "ABCDEFGH", "OperatorExternalKey": "ABCDEFGH", "rcayTimeRemaining": null }')));
+      // list.add(Machine.fromJSON(jsonDecode('{ "MachineId": "ABCDEFGH", "MachineInUseID": 0, "Available": true, "StatusDescription": "Available", "Category": "Washing Machines", "EstimatedCompletionTime": "2019-11-19T15:18:00.0685314Z", "HighSuggestedCreditAmount": 800, "LowSuggestedCreditAmount": 10, "Make": "Townsend Corporation", "Model": "Townsend 4000", "Name": "Test Washer", "Status": 1, "StatusText": "Available", "AccountExternalKey": "ABCDEFGH", "LocationId": "ABCDEFGH", "OperatorExternalKey": "ABCDEFGH", "rcayTimeRemaining": null }')));
 
       return list;
     } else {
