@@ -79,6 +79,14 @@ class MachinesTabState extends State<MachinesTab> {
   List<Widget> generateMachines() {
     List<Widget> widgets = [];
 
+    if (this._machines.length == 0) {
+      widgets.add(
+        Container(
+          child: Text("There are no laundry machines to display."),
+        )
+      );
+    }
+
     this._machines
       .forEach((Machine machine) {
         String name = machine.name;
